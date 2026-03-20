@@ -2,15 +2,20 @@ import { Button, Checkbox, Form, Input, message } from "antd";
 import { loginRequest } from "../api/login";
 import type { LoginFormFields } from "../model/types";
 import { useMutation } from "@tanstack/react-query";
+import { useNavigate } from "react-router";
+import { useAuthStore } from "@/entities/user/model/store";
 
 export const LoginForm = () => {
+  const navigate = useNavigate();
+  const setToken = useAuthStore((state) => state.setToken);
+
   const { mutate, isPending } = useMutation({
     mutationKey: [],
     mutationFn: loginRequest,
     onSuccess: (data, variables) => {
-      const storage = variables.remember ? localStorage : sessionStorage;
-      storage.setItem("token", data.accessToken);
+      setToken(data.accessToken, !!variables.remember);
       message.success("Добро пожаловать!");
+      navigate("/products");
       console.log(data);
     },
     onError: (error: any) => {
