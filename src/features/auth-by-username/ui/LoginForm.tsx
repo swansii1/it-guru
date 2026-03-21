@@ -4,6 +4,8 @@ import type { LoginFormFields } from "../model/types";
 import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router";
 import { useAuthStore } from "@/entities/user/model/store";
+import { LockOutlined, UserOutlined } from "@ant-design/icons";
+import style from "./LoginForm.module.css";
 
 export const LoginForm = () => {
   const navigate = useNavigate();
@@ -33,31 +35,46 @@ export const LoginForm = () => {
       name="auth_form"
       layout="vertical"
       onFinish={onFinish}
-      style={{ width: 400 }}
+      className={style.form}
       disabled={isPending}
     >
       <Form.Item
         name="username"
-        label="Почта"
+        label={<span className={style.fieldLabel}>Почта</span>}
         rules={[{ required: true, message: "Введите логин" }]}
       >
-        <Input placeholder="emilys" />
+        <Input
+          placeholder="test"
+          prefix={<UserOutlined />}
+          className={style.input}
+          allowClear
+        />
       </Form.Item>
 
       <Form.Item
         name="password"
-        label="Пароль"
+        label={<span className={style.fieldLabel}>Пароль</span>}
         rules={[{ required: true, message: "Введите пароль" }]}
       >
-        <Input.Password placeholder="emilyspass" />
+        <Input.Password
+          placeholder="************"
+          prefix={<LockOutlined />}
+          className={style.input}
+        />
       </Form.Item>
 
       <Form.Item name="remember" valuePropName="checked">
-        <Checkbox>Запомнить данные</Checkbox>
+        <Checkbox className={style.remember}>Запомнить данные</Checkbox>
       </Form.Item>
 
       <Form.Item>
-        <Button type="primary" htmlType="submit" block loading={isPending}>
+        <Button
+          type="primary"
+          htmlType="submit"
+          block
+          loading={isPending}
+          className={style.submit}
+        >
           Войти
         </Button>
       </Form.Item>
