@@ -38,7 +38,7 @@ export const LoginForm = () => {
     >
       <Form.Item
         name="username"
-        label="Логин"
+        label="Почта"
         rules={[{ required: true, message: "Введите логин" }]}
       >
         <Input placeholder="emilys" />

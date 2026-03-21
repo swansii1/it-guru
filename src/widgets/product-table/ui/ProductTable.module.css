@@ -1,0 +1,95 @@
+.page_wrapper {
+  background-color: #f9f9f9;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+.header_panel {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 32px;
+  background-color: #fff;
+  padding: 16px 24px;
+  border-radius: 12px;
+}
+
+.search_input {
+  width: 600px;
+  border-radius: 8px;
+  background-color: #f5f5f5;
+  border: none;
+}
+
+.table_card {
+  background-color: #fff;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+}
+
+.table_header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.table_title {
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.grid_container {
+  height: 500px;
+  width: 100%;
+}
+
+.name_container {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+}
+
+.name {
+  font-weight: 700;
+  color: #1a1a1a;
+}
+
+.name_categories {
+  font-size: 12px;
+  color: #bfbfbf;
+}
+
+.price_main {
+  font-weight: 500;
+}
+
+.price_cents {
+  color: #bfbfbf;
+}
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 24px;
+}
+
+.footer_text {
+  color: #bfbfbf;
+}
+
+.btn_add {
+  background-color: #4c1dca !important;
+  border-radius: 8px;
+}
+
+.btn_action_add {
+  background-color: #4c1dca !important;
+}
+
+.icon_more {
+  color: #bfbfbf;
+  font-size: 20px;
+  cursor: pointer;
+}

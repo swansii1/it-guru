@@ -9,8 +9,11 @@ export const LoginPage = () => {
     <div className={style.loginCard}>
       <Card className={style.card}>
         <Title level={2} className={style.title}>
-          Вход в систему
+          Добро пожаловать!
         </Title>
+        <p style={{ display: "flex", justifyContent: "center" }}>
+          Пожалйста, авторизуйтесь
+        </p>
         <LoginForm />
         <div className={style.text}>
           Нет аккаунта?
