@@ -1,4 +1,4 @@
-import { ProductTable } from "@/widgets/product-table/ui/ProductTable";
+import { ProductTable } from "@/widgets/product-table";
 import { Layout } from "antd";
 
 import style from "./ProductPage.module.css";
