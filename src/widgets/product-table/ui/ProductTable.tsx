@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { DataGrid, type GridColDef } from "@mui/x-data-grid";
 import {
   Button,
@@ -55,95 +55,109 @@ export const ProductTable = () => {
     order: sortModel[0]?.sort as "asc" | "desc",
   });
 
-  const columns: GridColDef[] = [
-    {
-      field: "title",
-      headerName: "Наименование",
-      flex: 1,
-      minWidth: 250,
-      renderCell: (params) => (
-        <Space>
-          <Avatar shape="square" size={40} src={params.row.thumbnail} />
-          <div className={style.name_container}>
-            <span className={style.name}>{params.row.title}</span>
-            <span className={style.name_categories}>{params.row.category}</span>
-          </div>
-        </Space>
-      ),
-    },
-    {
-      field: "brand",
-      headerName: "Вендор",
-      width: 150,
-      renderCell: (p) => <strong>{p.value}</strong>,
-    },
-    {
-      field: "sku",
-      headerName: "Артикул",
-      width: 130,
-      valueGetter: (_, row) => `RCH${row.id}Q1A`,
-    },
-    {
-      field: "rating",
-      headerName: "Оценка",
-      width: 100,
-      renderCell: (params) => (
-        <span style={{ color: params.value < 3.5 ? "#ff4d4f" : "#1a1a1a" }}>
-          {params.value}/5
-        </span>
-      ),
-    },
-    {
-      field: "price",
-      headerName: "Цена, ₽",
-      width: 150,
-      renderCell: (params) => {
-        const formatted = params.value
-          ?.toLocaleString("ru-RU")
-          .replace(/\u00A0/g, " ");
-        return (
-          <span className={style.price_main}>
-            {formatted}
-            <span className={style.price_cents}>, 00</span>
-          </span>
-        );
+  const columns: GridColDef[] = useMemo(
+    () => [
+      {
+        field: "title",
+        headerName: "Наименование",
+        flex: 1,
+        minWidth: 250,
+        renderCell: (params) => (
+          <Space>
+            <Avatar shape="square" size={40} src={params.row.thumbnail} />
+            <div className={style.name_container}>
+              <span className={style.name}>{params.row.title}</span>
+              <span className={style.name_categories}>{params.row.category}</span>
+            </div>
+          </Space>
+        ),
       },
-    },
-    {
-      field: "actions",
-      headerName: "",
-      width: 100,
-      sortable: false,
-      renderCell: () => (
-        <Space size="middle">
-          <Button
-            type="primary"
-            shape="circle"
-            icon={<PlusOutlined />}
-            size="small"
-            className={style.btn_action_add}
-          />
-          <MoreOutlined className={style.icon_more} />
-        </Space>
-      ),
-    },
-  ];
+      {
+        field: "brand",
+        headerName: "Вендор",
+        width: 150,
+        renderCell: (p) => (
+          <span className={style.vendor_cell}>{p.value}</span>
+        ),
+      },
+      {
+        field: "sku",
+        headerName: "Артикул",
+        width: 130,
+        sortable: false,
+        valueGetter: (_, row) => `RCH${row.id}Q1A`,
+      },
+      {
+        field: "rating",
+        headerName: "Оценка",
+        width: 100,
+        renderCell: (params) => (
+          <span
+            className={
+              params.value < 3.5 ? style.rating_low : style.rating_ok
+            }
+          >
+            {params.value}/5
+          </span>
+        ),
+      },
+      {
+        field: "price",
+        headerName: "Цена, ₽",
+        width: 150,
+        renderCell: (params) => {
+          const formatted = params.value
+            ?.toLocaleString("ru-RU")
+            .replace(/\u00A0/g, " ");
+          return (
+            <span className={style.price_main}>
+              {formatted}
+              <span className={style.price_cents}>, 00</span>
+            </span>
+          );
+        },
+      },
+      {
+        field: "actions",
+        headerName: "",
+        width: 100,
+        sortable: false,
+        renderCell: () => (
+          <Space size="middle">
+            <Button
+              type="primary"
+              shape="circle"
+              icon={<PlusOutlined />}
+              size="small"
+              className={style.btn_action_add}
+            />
+            <span className={style.btn_more_wrap}>
+              <MoreOutlined className={style.icon_more} />
+            </span>
+          </Space>
+        ),
+      },
+    ],
+    [],
+  );
 
   return (
     <div className={style.page_wrapper}>
       <div className={style.header_panel}>
-        <Typography.Title level={4} style={{ margin: 0 }}>
+        <Typography.Title level={4} className={style.page_title}>
           Товары
         </Typography.Title>
-        <Input
-          placeholder="Найти"
-          value={rawSearch}
-          prefix={<SearchOutlined style={{ color: "#bfbfbf" }} />}
-          className={style.search_input}
-          onChange={(e) => setRawSearch(e.target.value)}
-          allowClear
-        />
-        <div style={{ width: 40 }} />
+        <div className={style.search_wrap}>
+          <Input
+            placeholder="Найти"
+            value={rawSearch}
+            prefix={<SearchOutlined style={{ color: "#bfbfbf" }} />}
+            className={style.search_input}
+            onChange={(e) => setRawSearch(e.target.value)}
+            allowClear
+          />
+        </div>
+        <div className={style.header_spacer} aria-hidden />
       </div>
 
       <div className={style.table_card}>
@@ -154,6 +168,7 @@ export const ProductTable = () => {
               icon={<ReloadOutlined />}
               onClick={() => refetch()}
               loading={isFetching}
+              className={style.btn_refresh}
             />
             <Button
               type="primary"
@@ -175,17 +190,33 @@ export const ProductTable = () => {
             sortingMode="server"
             sortModel={sortModel}
             onSortModelChange={setSortModel}
+            checkboxSelection
             disableRowSelectionOnClick
             sx={{
               border: "none",
               "& .MuiDataGrid-columnHeaders": {
                 borderBottom: "1px solid #f0f0f0",
               },
-              "& .MuiDataGrid-cell": { borderBottom: "1px solid #f0f0f0" },
-              "& .MuiDataGrid-columnHeaderTitle": {
-                color: "#bfbfbf",
-                fontWeight: 500,
+              "& .MuiDataGrid-cell": {
+                borderBottom: "1px solid #f0f0f0",
+                alignItems: "center",
               },
+              "& .MuiDataGrid-columnHeaderTitle": {
+                color: "#a0a5b9",
+                fontWeight: 500,
+                fontSize: "13px",
+              },
+              "& .MuiDataGrid-row.Mui-selected": {
+                backgroundColor: "rgba(59, 78, 217, 0.06)",
+                boxShadow: "inset 3px 0 0 #3B4ED9",
+              },
+              "& .MuiDataGrid-row.Mui-selected:hover": {
+                backgroundColor: "rgba(59, 78, 217, 0.09)",
+              },
+              "& .MuiCheckbox-root.Mui-checked, & .MuiCheckbox-root.MuiCheckbox-indeterminate":
+                {
+                  color: "#3B4ED9",
+                },
             }}
           />
         </div>
@@ -200,6 +231,7 @@ export const ProductTable = () => {
             из {data?.total || 0}
           </span>
           <Pagination
+            className={style.pagination}
             current={paginationModel.page + 1}
             pageSize={paginationModel.pageSize}
             total={data?.total || 0}
