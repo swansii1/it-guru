@@ -43,7 +43,7 @@ export const ProductTable = () => {
     order: sortModel[0]?.sort as "asc" | "desc",
   });
 
-  const columns = useMemo(() => getProductColumns(style), [style]);
+  const columns = useMemo(() => getProductColumns(style), []);
 
   return (
     <div className={style.page_wrapper}>
