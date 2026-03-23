@@ -1,11 +1,12 @@
 import { useAuthStore } from "@/entities/user/model/store";
+import { throwApiErrorFromResponse } from "./api-error";
 
 export const API_URL = "https://dummyjson.com";
 
-export const baseRequest = async (
+export const baseRequest = async <T = unknown>(
   endpoint: string,
   options: RequestInit = {},
-) => {
+): Promise<T> => {
   const token = useAuthStore.getState().token;
 
   const headers = {
@@ -18,7 +19,9 @@ export const baseRequest = async (
     headers,
   });
 
-  if (!response.ok) throw new Error("Ошибка сервера");
+  if (!response.ok) {
+    await throwApiErrorFromResponse(response);
+  }
 
-  return response.json();
+  return response.json() as Promise<T>;
 };

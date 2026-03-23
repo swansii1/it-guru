@@ -5,7 +5,14 @@ import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router";
 import { useAuthStore } from "@/entities/user/model/store";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
+import { isApiError } from "@/shared/api/api-error";
 import style from "./LoginForm.module.css";
+
+function getLoginErrorMessage(error: unknown): string {
+  if (isApiError(error)) return error.message;
+  if (error instanceof Error && error.message) return error.message;
+  return "Ошибка входа!";
+}
 
 export const LoginForm = () => {
   const navigate = useNavigate();
@@ -18,11 +25,9 @@ export const LoginForm = () => {
       setToken(data.accessToken, !!variables.remember);
       message.success("Добро пожаловать!");
       navigate("/products");
-      console.log(data);
     },
-    onError: (error: any) => {
-      const errorMsg = error.response?.data?.message || "Ошибка входа!";
-      message.error(errorMsg);
+    onError: (error: unknown) => {
+      message.error(getLoginErrorMessage(error));
     },
   });
 
