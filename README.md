@@ -1,7 +1,7 @@
-# Dashboard & Catalog Management System
+# IT Guru 🚀
 
-Тестовое задание на позицию Frontend Developer.  
-Приложение представляет собой систему управления каталогом товаров с авторизацией, пагинацией, фильтрацией и функционалом добавления позиций.
+
+[**🔗Deploy**](https://it-guru-omega.vercel.app/)
 
 ---
 
