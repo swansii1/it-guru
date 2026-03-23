@@ -9,13 +9,10 @@ interface FetchParams {
   order?: "asc" | "desc";
 }
 
-export const fetchProducts = async ({
-  page,
-  limit,
-  search,
-  sortBy,
-  order,
-}: FetchParams): Promise<ProductResponse> => {
+export const fetchProducts = async <T = ProductResponse>(
+  { page, limit, search, sortBy, order }: FetchParams,
+  options?: RequestInit,
+): Promise<T> => {
   const skip = (page - 1) * limit;
   const baseUrl = search ? "/products/search" : "/products";
   const params = new URLSearchParams({
@@ -23,11 +20,14 @@ export const fetchProducts = async ({
     skip: skip.toString(),
   });
 
-  if (search) params.append("q", search);
+  if (search) {
+    params.append("q", search);
+  }
+
   if (sortBy) {
     params.append("sortBy", sortBy);
     params.append("order", order || "asc");
   }
 
-  return baseRequest(`${baseUrl}?${params.toString()}`);
+  return baseRequest<T>(`${baseUrl}?${params.toString()}`, options);
 };
