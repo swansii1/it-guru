@@ -1,7 +1,8 @@
-import { Input, Typography } from "antd";
+import { Input, Typography, Button } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
 
 import style from "./ProductTable.module.css";
+import { useAuthStore } from "@/entities/user/model/store";
 
 type Props = {
   rawSearch: string;
@@ -9,6 +10,7 @@ type Props = {
 };
 
 export function ProductTableHeader({ rawSearch, onRawSearchChange }: Props) {
+  const { logout } = useAuthStore();
   return (
     <div className={style.header_panel}>
       <Typography.Title level={4} className={style.page_title}>
@@ -24,6 +26,7 @@ export function ProductTableHeader({ rawSearch, onRawSearchChange }: Props) {
           allowClear
         />
       </div>
+      <Button onClick={() => logout()}>Выход</Button>
       <div className={style.header_spacer} aria-hidden />
     </div>
   );
