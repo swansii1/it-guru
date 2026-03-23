@@ -1,0 +1,44 @@
+.form {
+  width: 100%;
+}
+
+.fieldLabel {
+  color: #2c2f39;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.input {
+  height: 42px;
+  border-radius: 10px;
+  border-color: #e9ecf6;
+  background: #fff;
+}
+
+.input:hover,
+.input:focus,
+.input:focus-within {
+  border-color: #9ba7ff !important;
+  box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.08) !important;
+}
+
+.remember {
+  color: #a0a5b9;
+  font-size: 13px;
+}
+
+.submit {
+  height: 44px;
+  border-radius: 10px;
+  border: none;
+  background: linear-gradient(180deg, #3a5cff 0%, #2448f5 100%) !important;
+  box-shadow: 0 8px 16px rgba(36, 72, 245, 0.28);
+  font-weight: 600;
+}
+
+.submit:hover,
+.submit:focus {
+  background: linear-gradient(180deg, #3a5cff 0%, #2448f5 100%) !important;
+  filter: brightness(1.04);
+}
