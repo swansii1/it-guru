@@ -10,7 +10,7 @@
 - React 19
 - TypeScript
 - TanStack Query (React Query)
-- Zustand 
+- Zustand
 - MUI DataGrid
 - Ant Design
 - React Route
@@ -60,6 +60,7 @@
 ## 🏗 Архитектура
 
 - Проект построен по FSD:
+
 ---
 
 ## 📦 Установка и запуск
@@ -68,3 +69,4 @@
 git clone https://github.com/swansii1/it-guru.git
 npm install
 npm run dev
+```
