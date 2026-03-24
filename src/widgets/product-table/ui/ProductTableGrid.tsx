@@ -12,6 +12,12 @@ type Props = {
   sortModel: GridSortModel;
   onSortModelChange: (model: GridSortModel) => void;
 };
+const CustomNoRowsOverlay = () => (
+  <div className={style.customOwerlay}>
+    <span style={{ fontSize: "3rem" }}>😔</span>
+    <p>Товары не найдены.</p>
+  </div>
+);
 
 export function ProductTableGrid({
   rows,
@@ -33,6 +39,7 @@ export function ProductTableGrid({
         checkboxSelection
         disableRowSelectionOnClick
         sx={productTableGridSx}
+        slots={{ noRowsOverlay: CustomNoRowsOverlay }}
       />
     </div>
   );
